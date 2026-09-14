@@ -55,10 +55,10 @@ def has_player_won(secret_word, letters_guessed):
         False otherwise
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    if secret_word == letters_guessed:
-        return True
-    else:
-        return False
+    for letter in secret_word:
+        if letter not in letters_guessed:
+            return False
+    return True
 
 
 def get_word_progress(secret_word, letters_guessed):
@@ -71,7 +71,13 @@ def get_word_progress(secret_word, letters_guessed):
         which letters in secret_word have not been guessed so far
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    progress = ""
+    for letters in secret_word:
+        if letters in letters_guessed:
+            progress += letters
+        else:
+            progress += "*"
+    return progress
 
 
 def get_available_letters(letters_guessed):
@@ -84,8 +90,11 @@ def get_available_letters(letters_guessed):
       alphabetical order
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
+    available_letters = ""
+    for letters in string.ascii_lowercase:
+        if letters not in letters_guessed:
+            available_letters += letters
+    return available_letters
 
 
 def hangman(secret_word, with_help):
@@ -128,7 +137,7 @@ def hangman(secret_word, with_help):
     Follows the other limitations detailed in the problem write-up.
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    
 
 
 
