@@ -137,9 +137,61 @@ def hangman(secret_word, with_help):
     Follows the other limitations detailed in the problem write-up.
     """
     # FILL IN YOUR CODE HERE AND DELETE "pass"
+    word_length = len(secret_word)
+    guesses_remaining = 10
+    letters_guessed = []
     
+    print("Welcome to Hangman!")
+    print(f"I am thinking of a word that is {word_length} letters long.")
+    
+    while not has_player_won(secret_word, letters_guessed) and guesses_remaining > 0:
+        print("------")
+        print(f"You have {guesses_remaining} guesses left.")
+        print(f"Available letters: {get_available_letters(letters_guessed)}")
+        
+        user_guess = input("Please guess a letter: ").lower()
+        if user_guess not in "!" and (user_guess not in string.ascii_lowercase):
+            print("only alphabets are allowed")
+            continue
+        
+        if with_help and user_guess == "!":
+            if guesses_remaining < 3:
+                print("You do not have enough guesses remaining to use the help feature.")
+            else:
+                missing_letters = []
+                for letter in secret_word:
+                    if letter not in letters_guessed:
+                        missing_letters.append(letter)
+                if missing_letters:
+                    revealed_letter = random.choice(missing_letters)
+                    letters_guessed.append(revealed_letter)
+                    guesses_remaining -= 3
+                    print(f"Letter revealed: {revealed_letter}")
+                    print(get_word_progress(secret_word, letters_guessed))
+        else:
+            if user_guess in letters_guessed:
+                print("Oops! You've already guessed that letter:", get_word_progress(secret_word, letters_guessed))
+            elif user_guess in secret_word:
+                letters_guessed.append(user_guess)
+                print("Good guess:", get_word_progress(secret_word, letters_guessed))
+            else:
+                letters_guessed.append(user_guess)
+                print("Oops! That letter is not in my word:", get_word_progress(secret_word, letters_guessed))
+                if user_guess in "aeiou":
+                    guesses_remaining -= 2
+                else:
+                    guesses_remaining -= 1
 
-
+    print("------")
+    if has_player_won(secret_word, letters_guessed):
+        unique_letters = len(set(secret_word))
+        score = (guesses_remaining + (4 * unique_letters)) + (3 * len(secret_word))
+        print("Congratulations, you won!")
+        print(f"Your total score for this game is: {score}")
+    else:
+        print(f"Sorry, you ran out of guesses. The word was {secret_word}")    
+    
+# hangman("wildcard", True)  # Example call to the hangman function
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the lines to test
