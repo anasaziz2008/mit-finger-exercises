@@ -191,7 +191,7 @@ def hangman(secret_word, with_help):
     else:
         print(f"Sorry, you ran out of guesses. The word was {secret_word}")    
     
-# hangman("wildcard", True)  # Example call to the hangman function
+hangman(choose_word(wordlist), True)  # Example call to the hangman function
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the lines to test
